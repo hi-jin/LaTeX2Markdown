@@ -3,6 +3,7 @@ from latex_parser import parser
 from latex_ast import *
 import base64
 import os
+from latex_encoder import encode
 
 
 def interp(ast):
@@ -31,10 +32,7 @@ def interp(ast):
         case EXPR(child):
             return interp(child)
         case MATH(string):
-            png = requests.get(
-                f"https://latex.codecogs.com/png.latex?{string}").content
-            base64_png = base64.b64encode(png).decode("utf-8")
-            return f"![](data:image/png;base64,{base64_png})"
+            return f'![](data:image/svg+xml;base64,{encode(string)})'
 
 
 def main():
