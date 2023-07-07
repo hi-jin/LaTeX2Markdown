@@ -26,12 +26,13 @@ def interp(ast):
         case EXPR_LIST(expr_list):
             result = ""
             for expr in expr_list:
-                result += interp(expr) # type: ignore
+                result += interp(expr)  # type: ignore
             return result
         case EXPR(child):
             return interp(child)
         case MATH(string):
-            png = requests.get(f"https://latex.codecogs.com/png.latex?{string}").content
+            png = requests.get(
+                f"https://latex.codecogs.com/png.latex?{string}").content
             base64_png = base64.b64encode(png).decode("utf-8")
             return f"![](data:image/png;base64,{base64_png})"
 
@@ -39,19 +40,20 @@ def interp(ast):
 def main():
     input_file_dir = "input_files"
     output_file_dir = "output_files"
-    
+
     input_files = os.listdir(input_file_dir)
-    
+
     for input_file_name in input_files:
-        with open(os.path.join(input_file_dir, input_file_name), "r") as f:
+        with open(os.path.join(input_file_dir, input_file_name), "r", encoding='utf-8') as f:
             file = f.read()
-        
+
         ast = parser.parse(file)
         md = interp(ast)
-        
-        output_file = os.path.join(output_file_dir, input_file_name.split(".")[0] + ".md")
+
+        output_file = os.path.join(
+            output_file_dir, input_file_name.split(".")[0] + ".md")
         with open(output_file, "w+") as f:
-            f.write(md) # type: ignore
+            f.write(md)  # type: ignore
 
 
 if __name__ == "__main__":
