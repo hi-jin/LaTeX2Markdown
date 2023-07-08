@@ -1,7 +1,5 @@
-import requests
 from latex_parser import parser
 from latex_ast import *
-import base64
 import os
 from latex_encoder import encode
 
