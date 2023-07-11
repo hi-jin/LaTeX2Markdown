@@ -15,6 +15,7 @@ def main():
     for directory in os.listdir(path):
         if os.path.isdir(os.path.join(path, directory)):
             problem_name = get_problem_name(directory)
+            print(problem_name)
             statement = os.path.join(path, directory, "statements", "korean")
 
             file = open(os.path.join(statement, "problem.tex"),

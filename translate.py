@@ -42,7 +42,7 @@ def interp(node):
         case Monospace(text):
             return f"`{interp(text)}`"
         case Math(text):
-            return f'![](data:image/svg+xml;base64,{encode(interp(text))})'
+            return f'![](data:image/svg+xml;base64,{encode(text)})'
         case Input(paragraphs):
             return '\n\n'.join(map(interp, paragraphs))
         case Output(paragraphs):

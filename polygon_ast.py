@@ -67,6 +67,16 @@ class Example_file:
         return f'Example_file({self.input!r}, {self.output!r})'
 
 
+class Note:
+    __match_args__ = ('paragraphs', )
+
+    def __init__(self, paragraphs):
+        self.paragraphs = paragraphs
+
+    def __repr__(self):
+        return f'Note({self.paragraphs!r})'
+
+
 class Paragraph:
     __match_args__ = ('head', 'paragraph')
 

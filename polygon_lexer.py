@@ -8,11 +8,12 @@ tokens = (
     "OUTPUT",
     "EXAMPLES",
     "EXAMPLE",
+    "NOTE",
     "BOLD",
     "ITALIC",
     "MONOSPACE",
     "IMAGE",
-    "DOLLAR",
+    "MATH",
     "LEFT_BRACE",
     "RIGHT_BRACE",
     "NEWLINE",
@@ -50,6 +51,11 @@ def t_EXAMPLE(t):
     return t
 
 
+def t_NOTE(t):
+    r"\\Note"
+    return t
+
+
 def t_BOLD(t):
     r"\\bf"
     return t
@@ -72,8 +78,10 @@ def t_IMAGE(t):
 """
 
 
-def t_DOLLAR(t):
-    r"\$"
+def t_MATH(t):
+    r"\$[^\$]+\$"
+
+    t.value = t.value[1:-1]
     return t
 
 

@@ -7,17 +7,9 @@ from polygon_ast import *
 def p_description(p):
     """
     description : pbegin paragraphs input output example pend
+                | pbegin paragraphs input output example note pend
     """
     p[0] = Description(p[1], p[2], p[3], p[4], p[5])
-
-
-def p_description_error(p):
-    """
-    description : error error error error error error
-    """
-    line_number = p.lexer.lineno
-    char_position = p.lexer.lexpos
-    print("Syntax error at line", line_number, "character", char_position)
 
 
 def p_pbegin(p):
@@ -71,6 +63,13 @@ def p_example_files(p):
         p[0] = (p[1], )
     elif len(p) == 3:
         p[0] = (p[1], *p[2])
+
+
+def p_note(p):
+    """
+    note : NOTE NEWLINE paragraphs
+    """
+    p[0] = Note(p[3])
 
 
 def p_attr(p):
@@ -132,7 +131,7 @@ def p_italic(p):
     """
     italic : ITALIC attr
     """
-    p[0] = ("italic", p[2])
+    p[0] = Italic(p[2])
 
 
 def p_monospace(p):
@@ -144,27 +143,16 @@ def p_monospace(p):
 
 def p_math(p):
     """
-    math : DOLLAR text DOLLAR
+    math : MATH
     """
-    p[0] = Math(p[2])
+    p[0] = Math(p[1])
 
 
 def p_error(p):
+    line_number = p.lexer.lineno
+    char_position = p.lexer.lexpos
+    print("Syntax error at line", line_number, "character", char_position)
     print(f"Syntax error at '{p.value}'")
 
 
 parser: LRParser = yacc.yacc()
-
-# # parser test
-# if __name__ == '__main__':
-#     with open("C:\Dev\package\\array\spot-the-spy-3$linux\statements\korean\problem.tex", "r", encoding='utf-8') as f:
-#         data = f.read()
-#         lexer.input(data)
-#         while True:
-#             tok = lexer.token()
-#             if not tok:
-#                 break
-#             print(tok)
-#         print("====================================")
-#         result = parser.parse(data)
-#         print(result)
