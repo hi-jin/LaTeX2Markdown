@@ -41,7 +41,7 @@ def t_OUTPUT(t):
 
 
 def t_EXAMPLES(t):
-    r"\\Examples"
+    r"\\Examples?"
     return t
 
 

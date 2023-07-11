@@ -11,6 +11,15 @@ def p_description(p):
     p[0] = Description(p[1], p[2], p[3], p[4], p[5])
 
 
+def p_description_error(p):
+    """
+    description : error error error error error error
+    """
+    line_number = p.lexer.lineno
+    char_position = p.lexer.lexpos
+    print("Syntax error at line", line_number, "character", char_position)
+
+
 def p_pbegin(p):
     """
     pbegin : BEGIN attr attr attr attr attr attr NEWLINE
@@ -146,8 +155,16 @@ def p_error(p):
 
 parser: LRParser = yacc.yacc()
 
-# file = open("./input_files/seq-comp/test.tex", "r", encoding="utf-8")
-# text = file.read()
-
-# ast = parser.parse(text)
-# print(ast)
+# # parser test
+# if __name__ == '__main__':
+#     with open("C:\Dev\package\\array\spot-the-spy-3$linux\statements\korean\problem.tex", "r", encoding='utf-8') as f:
+#         data = f.read()
+#         lexer.input(data)
+#         while True:
+#             tok = lexer.token()
+#             if not tok:
+#                 break
+#             print(tok)
+#         print("====================================")
+#         result = parser.parse(data)
+#         print(result)
