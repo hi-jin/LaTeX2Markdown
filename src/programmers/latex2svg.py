@@ -34,6 +34,7 @@ default_preamble = r"""
 \usepackage{amssymb}
 \usepackage{newtxtext}
 \usepackage[libertine]{newtxmath}
+\usepackage{xcolor}
 """
 
 latex_cmd = 'latex -interaction nonstopmode -halt-on-error'

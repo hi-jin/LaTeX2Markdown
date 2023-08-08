@@ -40,7 +40,7 @@ class Test:
 
     @staticmethod
     def from_dict(d: dict) -> Test:
-        return Test(d['input'], d['output'])
+        return Test(d['input'].replace('\r\n', '\n'), d['output'].replace('\r\n', '\n'))
 
     def to_dict(self) -> dict:
         return {
@@ -53,3 +53,6 @@ class Test:
             'input': self.input,
             'output': self.output
         }, indent=4)
+
+    def __iter__(self):
+        return iter((self.input, self.output))
