@@ -38,7 +38,7 @@ class Test:
         self.input = input
         self.output = output
 
-    @ staticmethod
+    @staticmethod
     def from_dict(d: dict) -> Test:
         return Test(d['input'], d['output'])
 
