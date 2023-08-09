@@ -1,5 +1,5 @@
 from __future__ import annotations
-from statement import Statement
+from statement import Statement, Test
 from solution import Solution
 from typing import Tuple, Dict
 import os
@@ -7,10 +7,11 @@ import json
 
 
 class Problem:
-    def __init__(self, name: str, statement: Statement, images: Dict[str, str], solutions: Tuple[Solution], tags: Tuple[str], difficulty: Tuple[str]):
+    def __init__(self, name: str, statement: Statement, images: Dict[str, str], tests: Tuple[Test], solutions: Tuple[Solution], tags: Tuple[str], difficulty: Tuple[str]):
         self.name = name
         self.statement = statement
         self.images = images
+        self.tests = tests
         self.solutions = solutions
         self.tags = tags
         self.difficulty = difficulty
@@ -33,6 +34,14 @@ class Problem:
             for file in files:
                 if file.endswith(".png"):
                     images[file] = os.path.join(root, file)
+
+        tests_path = os.path.join(path, 'tests')
+
+        file_paths = [os.path.abspath(os.path.join(
+            tests_path, filename)) for filename in os.listdir(tests_path)]
+
+        tests = tuple(Test(file_paths[i], file_paths[i+1])
+                      for i in range(0, len(file_paths), 2))
 
         solutions = ()
         solution_path = os.path.join(path, 'solutions')
@@ -59,4 +68,4 @@ class Problem:
                 else:
                     tags += (tag,)
 
-        return Problem(name, statement, images, solutions, tags, (tier, level))
+        return Problem(name, statement, images, tests, solutions, tags, (tier, level))
