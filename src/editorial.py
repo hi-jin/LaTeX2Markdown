@@ -35,6 +35,11 @@ statement_template = '''\\begin{{frame}}{{{title}}}
 \\end{{frame}}
 '''
 
+constraints_template = '''\\begin{{frame}}{{{title} 입출력}}
+{statement}
+\\end{{frame}}
+'''
+
 test_template = '''\\begin{{frame}}[fragile]{{{title} 예제 입출력}}
 \\begin{{minted}}[linenos,fontsize=\scriptsize,frame=single]{{text}}
 {tests}
@@ -47,7 +52,7 @@ def statement(problem: Problem):
     return '\n\n'.join((
         statement_template.format(
             title=problem.statement.name, statement=problem.statement.legend),
-        statement_template.format(
+        constraints_template.format(
             title=problem.statement.name, statement='\n\n'.join(
                 (problem.statement.input, problem.statement.output))
         ),
