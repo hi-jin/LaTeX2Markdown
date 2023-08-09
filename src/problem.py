@@ -7,11 +7,10 @@ import json
 
 
 class Problem:
-    def __init__(self, name: str, statement: Statement, images: Dict[str, str], tutorial: Tuple[str], solutions: Tuple[Solution]):
+    def __init__(self, name: str, statement: Statement, images: Dict[str, str], solutions: Tuple[Solution]):
         self.name = name
         self.statement = statement
         self.images = images
-        self.tutorial = tutorial
         self.solutions = solutions
 
     @staticmethod
@@ -33,8 +32,12 @@ class Problem:
                 if file.endswith(".png"):
                     images[file] = os.path.join(root, file)
 
-        tutorial = ()
-
         solutions = ()
+        solution_path = os.path.join(path, 'solutions')
 
-        return Problem(name, statement, images, tutorial, solutions)
+        for root, dirs, files in os.walk(solution_path):
+            for file in files:
+                if file.endswith(".py") or file.endswith(".java"):
+                    solutions += (Solution(os.path.join(root, file)),)
+
+        return Problem(name, statement, images, solutions)

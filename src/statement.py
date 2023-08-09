@@ -6,12 +6,13 @@ import json
 
 
 class Statement:
-    def __init__(self, name: str, legend: Description, input: Description, output: Description, tests: Tuple[Test]):
+    def __init__(self, name: str, legend: Description, input: Description, output: Description, tests: Tuple[Test], tutorial: Description | None):
         self.name = name
         self.legend = legend
         self.input = input
         self.output = output
         self.tests = tests
+        self.tutorial = tutorial
 
     @staticmethod
     def from_dict(d: dict) -> Statement:
@@ -20,7 +21,8 @@ class Statement:
             parse(d['legend']),
             parse(d['input']),
             parse(d['output']),
-            tuple(Test.from_dict(test) for test in d['sampleTests'])
+            tuple(Test.from_dict(test) for test in d['sampleTests']),
+            parse(d['tutorial']) if d['tutorial'] else None
         )
 
     def __repr__(self) -> str:
@@ -29,7 +31,8 @@ class Statement:
             'legend': repr(self.legend),
             'input': repr(self.input),
             'output': repr(self.output),
-            'sampleTests': tuple(test.to_dict() for test in self.tests)
+            'sampleTests': tuple(test.to_dict() for test in self.tests),
+            'tutorial': repr(self.tutorial)
         }, indent=4, ensure_ascii=False)
 
 
