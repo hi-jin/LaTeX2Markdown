@@ -3,6 +3,7 @@ from typing import Dict
 from programmers.latex2svg import latex2svg
 from problem import Problem
 from description.ast import *
+from description.parser import parse
 
 
 def translate(problem: Problem) -> str:
@@ -34,11 +35,11 @@ def translate(problem: Problem) -> str:
     return '\n\n'.join((
         f"# {problem.statement.name}",
         f"## 문제",
-        interp(problem.statement.legend, problem.images),
+        interp(parse(problem.statement.legend), problem.images),
         f"## 입력",
-        interp(problem.statement.input, problem.images),
+        interp(parse(problem.statement.input), problem.images),
         f"## 출력",
-        interp(problem.statement.output, problem.images),
+        interp(parse(problem.statement.output), problem.images),
         test,
     ))
 

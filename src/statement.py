@@ -1,33 +1,33 @@
 from __future__ import annotations
-from description.ast import Description
-from description.parser import parse
 from typing import Tuple
 import json
 
 
 class Statement:
-    def __init__(self, name: str, legend: Description, input: Description, output: Description, tests: Tuple[Test], tutorial: Description | None):
+    def __init__(self, name: str, legend: str, input: str, output: str, tests: Tuple[Test], notes: str, tutorial: str):
         self.name = name
         self.legend = legend
         self.input = input
         self.output = output
         self.tests = tests
+        self.notes = notes
         self.tutorial = tutorial
 
     @staticmethod
     def from_dict(d: dict) -> Statement:
         return Statement(
             d['name'],
-            parse(d['legend']),
-            parse(d['input']),
-            parse(d['output']),
+            d['legend'],
+            d['input'],
+            d['output'],
             tuple(Test.from_dict(test) for test in d['sampleTests']),
-            parse(d['tutorial']) if d['tutorial'] else None
+            d['notes'],
+            d['tutorial'],
         )
 
     def __repr__(self) -> str:
         return json.dumps({
-            'name': self.name,
+            'name': repr(self.name),
             'legend': repr(self.legend),
             'input': repr(self.input),
             'output': repr(self.output),
