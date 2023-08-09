@@ -17,11 +17,17 @@ abstract_template = '''\\section{{{title}}}
 
 
 def abstract(problem: Problem):
+    tags = ', '.join(problem.tags)
+
+    ac_color = f'ac{problem.difficulty[0]}'
+    difficulty = problem.difficulty[1]
+    difficulty = difficulty[0].upper() + difficulty[1:]
+
     notes = '\n\t\t'.join(
         f'\\item {note}' for note in problem.statement.notes.split('\r\n'))
 
-    return abstract_template.format(title=problem.statement.name, tags='deque', ac_color='acsilver',
-                                    difficulty='Normal', notes=notes)
+    return abstract_template.format(title=problem.statement.name, tags=tags, ac_color=ac_color,
+                                    difficulty=difficulty, notes=notes)
 
 
 statement_template = '''\\begin{{frame}}{{{title}}}
