@@ -1,4 +1,5 @@
 import os
+import shutil
 from problem import Problem
 
 
@@ -9,10 +10,8 @@ def export_tests(problem: Problem, path: str):
         output_file_name, output_ext = os.path.splitext(
             os.path.basename(output_file_path))
 
-        with open(input_file_path, 'r', encoding='utf-8') as input_file:
-            with open(f"{path}/{input_file_name}.in.txt", 'w', newline='\n', encoding='utf-8') as f:
-                f.write(input_file.read())
+        shutil.copy(input_file_path, os.path.join(
+            path, f"{input_file_name}.in.txt"))
 
-        with open(output_file_path, 'r', encoding='utf-8') as output_file:
-            with open(f"{path}/{output_file_name}.out.txt", 'w', newline='\n', encoding='utf-8') as f:
-                f.write(output_file.read())
+        shutil.copy(output_file_path, os.path.join(
+            path, f"{output_file_name}.out.txt"))
