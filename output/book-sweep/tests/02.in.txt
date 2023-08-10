@@ -1,0 +1,8 @@
+abcde
+6
+next
+next
+next
+right
+right
+right
