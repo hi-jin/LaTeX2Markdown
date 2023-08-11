@@ -1,0 +1,4 @@
+abcde
+2
+next
+right
